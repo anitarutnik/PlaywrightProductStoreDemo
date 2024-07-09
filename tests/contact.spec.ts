@@ -42,3 +42,23 @@ test('message sent', async ({ page }) => {
 
 });
 
+test('modal closed', async ({page}) => {
+    await page.goto('https://www.demoblaze.com/');
+
+    await page.getByRole('link', { name: 'Contact' }).click();
+
+    await page.getByRole('button', { name: 'Send message' }).click();
+
+    page.on('dialog', dialog => dialog.accept());
+
+    //Check if Contact modal is closed
+    await expect(page.getByRole('heading', { name: 'New message' })).toBeHidden();
+});
+
+test('email format check', async ({page}) => {
+    await page.goto('https://www.demoblaze.com/');
+
+    await page.getByRole('link', { name: 'Contact' }).click();
+
+});
+
