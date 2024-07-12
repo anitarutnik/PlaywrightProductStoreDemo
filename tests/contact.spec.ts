@@ -11,6 +11,16 @@ test('contact link', async ({ page }) => {
 
 });
 
+test('Contact email CSS check', async ({ page }) => {
+    await page.goto('https://www.demoblaze.com/');
+
+    // Click the Contact link.
+    await page.getByRole('link', { name: 'Contact' }).click();
+
+    const locator = page.getByText('Contact Email:');
+    await expect(locator).toHaveCSS('font-weight', '400');
+});
+
 test('message sent', async ({ page }) => {
     await page.goto('https://www.demoblaze.com/');
 
@@ -42,6 +52,17 @@ test('message sent', async ({ page }) => {
 
 });
 
+test('Send message button CSS check', async ({page}) => {
+    await page.goto('https://www.demoblaze.com/');
+
+    await page.getByRole('link', { name: 'Contact' }).click();
+
+    // Check the CSS of the button
+    const locator = page.getByRole('button', { name: 'Send message' });
+    await expect(locator).toHaveCSS('display', 'block');
+
+});
+
 test('modal closed', async ({page}) => {
     await page.goto('https://www.demoblaze.com/');
 
@@ -54,11 +75,3 @@ test('modal closed', async ({page}) => {
     //Check if Contact modal is closed
     await expect(page.getByRole('heading', { name: 'New message' })).toBeHidden();
 });
-
-test('email format check', async ({page}) => {
-    await page.goto('https://www.demoblaze.com/');
-
-    await page.getByRole('link', { name: 'Contact' }).click();
-
-});
-

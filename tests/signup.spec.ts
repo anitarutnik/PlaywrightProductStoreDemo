@@ -6,7 +6,7 @@ test('sign up link', async ({ page }) => {
     //Click the sign up link.
     await page.getByRole('link', { name: 'Sign up' }).click();
 
-    //Expects page to open a modal with the "Sign up" heading.
+    //Expects page to open a modal with the "Sign up" heading
     await expect(page.getByRole('heading', { name: 'Sign up' })).toBeVisible();
 
 });
@@ -42,9 +42,6 @@ test('sign up success', async ({page}) => {
 test('user already exists', async ({page}) => {
     await page.goto('https://www.demoblaze.com/');
 
-    //Click the sign up link
-    await page.getByRole('link', { name: 'Sign up' }).click();
-
     //Wait for the alert to appear and verify its content
     page.on('dialog', async dialog => {
 
@@ -54,6 +51,10 @@ test('user already exists', async ({page}) => {
         //Click the Ok button
         await dialog.accept();
     });
+
+    //Click the sign up link
+    await page.getByRole('link', { name: 'Sign up' }).click();
+    
 
     //Enter registered username 
     await page.getByLabel('Username:').fill('testuser');
@@ -66,3 +67,13 @@ test('user already exists', async ({page}) => {
 
 });
 
+test('close button CSS check', async ({page}) => {
+    await page.goto('https://www.demoblaze.com/');
+
+    await page.getByRole('link', { name: 'Sign up' }).click();
+
+    // Check the CSS of the Close button
+    const locator = page.getByLabel('Sign up').getByText('Close');
+    await expect(locator).toHaveCSS('border-top-style', 'solid');
+
+});
