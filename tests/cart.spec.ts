@@ -27,7 +27,7 @@ test('Purchase success', async ({ page }) => {
     await page.getByLabel('Total:').fill('Test Name');
 
     //Enter country
-    await page.getByLabel('Country:').fill('Test Country');
+    await page.getByLabel('Country:').fill('Test Country'); 
 
     //Enter city
     await page.getByLabel('City:').fill('Test City');
@@ -49,5 +49,29 @@ test('Purchase success', async ({ page }) => {
    
     
  });
+
+ test('Country input field CSS check', async ({page}) => {
+    await page.goto('https://www.demoblaze.com/');
+
+    await page.getByRole('link', { name: 'Cart' }).click();
+
+    await page.getByRole('button', { name: 'Place Order' }).click();
+
+    //Check the styling of the Country field
+    const locator = page.getByLabel('Country:');
+    await expect(locator).toHaveCSS('background-clip', 'padding-box');
+
+});
+
+test('table cell CSS check', async ({page}) => {
+    await page.goto('https://www.demoblaze.com/');
+
+    await page.getByRole('link', { name: 'Cart' }).click();
+
+    //Check the styling of the table cell
+    const locator = page.getByRole('cell', { name: 'Title' });
+    await expect(locator).toHaveCSS('padding-left', '12px');
+
+});
 
 

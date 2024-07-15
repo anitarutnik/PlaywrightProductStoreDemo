@@ -94,7 +94,7 @@ test('form validation', async ({ page }) => {
 
 });
 
-test('input field CSS check', async ({page}) => {
+test('username input field CSS check', async ({page}) => {
     await page.goto('https://www.demoblaze.com/');
 
     await page.getByRole('link', { name: 'Log in' }).click();
