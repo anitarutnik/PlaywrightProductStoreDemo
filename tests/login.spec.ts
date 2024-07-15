@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { LoginPage } from '../page-models/login.page';
 
 test('login link', async ({ page }) => {
     await page.goto('https://www.demoblaze.com/');
@@ -35,6 +36,19 @@ test('login success', async ({ page }) => {
     //Check if the user is logged in by looking for the logout button
     const isLoggedIn = await page.isVisible('#logout2');
 
+});
+
+test('POM login success', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+
+    await loginPage.loginLinkLocator().click();
+
+    await loginPage.fillLoginForms('test', 'test');
+
+    await loginPage.loginButtonLocator().click();
+
+    await expect(loginPage.loginLinkLocator()).toBeHidden();
 });
 
 test('empty field alert', async ({ page }) => {
@@ -94,7 +108,22 @@ test('form validation', async ({ page }) => {
 
 });
 
-test('username input field CSS check', async ({page}) => {
+test('POM form validation', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    //Wait for the alert to appear and verify its content
+    page.on('dialog', async dialog => {
+
+        //Check the dialog message
+        expect(dialog.message()).toBe('User does not exist.');
+
+        //Click the Ok button
+        await dialog.accept();
+    });
+    await loginPage.loginLinkLocator().click();
+});
+
+test('username input field CSS check', async ({ page }) => {
     await page.goto('https://www.demoblaze.com/');
 
     await page.getByRole('link', { name: 'Log in' }).click();
@@ -105,7 +134,7 @@ test('username input field CSS check', async ({page}) => {
 
 });
 
-test('login button CSS check', async ({page}) => {
+test('login button CSS check', async ({ page }) => {
     await page.goto('https://www.demoblaze.com/');
 
     await page.getByRole('link', { name: 'Log in' }).click();
@@ -116,7 +145,7 @@ test('login button CSS check', async ({page}) => {
 
 });
 
-test('x button CSS check', async ({page}) => {
+test('x button CSS check', async ({ page }) => {
     await page.goto('https://www.demoblaze.com/');
 
     await page.getByRole('link', { name: 'Log in' }).click();
