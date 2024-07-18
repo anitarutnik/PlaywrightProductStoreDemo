@@ -9,7 +9,7 @@ test('open log in modal', async ({ page }) => {
     await loginPage.loginLinkLocator.click();
 
     //Expects page to open a modal with the "Log in" heading.
-    await expect(page.getByRole('heading', { name: 'Log in' })).toBeVisible();
+    await expect(loginPage.loginHeading).toBeVisible();
 
 });
 
@@ -30,7 +30,7 @@ test('login modal heading hidden', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.logIn('test', 'test');
 
-    await expect(loginPage.loginModalHeading).toBeHidden();
+    await expect(loginPage.loginHeading).toBeHidden();
 });
 
 
@@ -48,7 +48,7 @@ test('empty field alert', async ({ page }) => {
     });
 
     await loginPage.loginLinkLocator.click();
-    await loginPage.loginBtnLocator.click();
+    await loginPage.loginBtn.click();
 
 });
 
@@ -79,7 +79,7 @@ test('close modal with Close button', async ({ page }) => {
 
     await loginPage.loginLinkLocator.click();
 
-    await loginPage.loginCloseBtn.click();
+    await loginPage.CloseBtn.click();
 
 });
 
@@ -91,7 +91,7 @@ test('close modal with X button', async ({ page }) => {
 
     await loginPage.loginLinkLocator.click();
 
-    await loginPage.loginXbutton.click();
+    await loginPage.xBtn.click();
 
 });
 
@@ -102,8 +102,7 @@ test('username input field CSS check', async ({ page }) => {
     await loginPage.loginLinkLocator.click();
 
     // Check the CSS of the field
-    const locator = page.locator('#loginusername');
-    await expect(locator).toHaveCSS('border-top-left-radius', '4px');
+    await expect(loginPage.usernameInput).toHaveCSS('border-top-left-radius', '4px');
 
 });
 
@@ -115,8 +114,7 @@ test('login button CSS check', async ({ page }) => {
     await loginPage.loginLinkLocator.click();
 
     // Check the CSS of the Log in button
-    const locator = loginPage.loginBtnLocator;
-    await expect(locator).toHaveCSS('font-family', 'sans-serif');
+    await expect(loginPage.loginBtn).toHaveCSS('font-family', 'sans-serif');
 
 });
 
@@ -128,8 +126,7 @@ test('x button CSS check', async ({ page }) => {
     await loginPage.loginLinkLocator.click();
 
     // Check the CSS of the 'x' button
-    const locator = loginPage.loginXbutton;
-    await expect(locator).toHaveCSS('font-stretch', '100%');
+    await expect(loginPage.xBtn).toHaveCSS('font-stretch', '100%');
 
 });
 

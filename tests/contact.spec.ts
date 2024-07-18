@@ -1,28 +1,30 @@
 import { test, expect } from '@playwright/test';
+import { ContactPage } from '../page-models/contact.page';
 
-test('contact link', async ({ page }) => {
-    await page.goto('https://www.demoblaze.com/');
+test('open contact modal', async ({ page }) => {
+    const contactPage = new ContactPage(page);
+    await contactPage.goto();
 
-    // Click the Contact link.
-    await page.getByRole('link', { name: 'Contact' }).click();
+    //Click the Contact link
+    await contactPage.contactLinkLocator.click();
 
-    // Expects page to open a modal with the "New message" heading.
-    await expect(page.getByRole('heading', { name: 'New message' })).toBeVisible();
+    //Expects page to open a modal with the "New message" heading.
+    await expect(contactPage.newMessageHeading).toBeVisible();
 
 });
 
 test('Contact email CSS check', async ({ page }) => {
-    await page.goto('https://www.demoblaze.com/');
+    const contactPage = new ContactPage(page);
+    await contactPage.goto();
 
-    // Click the Contact link.
-    await page.getByRole('link', { name: 'Contact' }).click();
+    //Click the Contact link.
+    await contactPage.contactLinkLocator.click();
 
-    const locator = page.getByText('Contact Email:');
-    await expect(locator).toHaveCSS('font-weight', '400');
+    await expect(contactPage.emailInput).toHaveCSS('font-weight', '400');
 });
 
 test('message sent', async ({ page }) => {
-    await page.goto('https://www.demoblaze.com/');
+    const contactPage = new ContactPage(page);
 
     //Wait for the alert to appear and verify its content
     page.on('dialog', async dialog => {
@@ -35,43 +37,30 @@ test('message sent', async ({ page }) => {
 
     });
 
-    //Click the contact link.
-    await page.getByRole('link', { name: 'Contact' }).click();
+    await contactPage.sendMessage('test@test.com', 'test name', 'test message');
+});
 
-    //Enter Contact Email
-    await page.locator('#recipient-email').fill('test@test.com');
+test('Send message button CSS check', async ({ page }) => {
+    const contactPage = new ContactPage(page);
+    await contactPage.goto();
 
-    //Enter Contact Name
-    await page.getByLabel('Contact Email:').fill('Test Name');
+    await contactPage.contactLinkLocator.click();
 
-    //Enter Message
-    await page.getByLabel('Message:').fill('This is test message');
-
-    //Click Send message
-    await page.getByRole('button', { name: 'Send message' }).click();
+    //Check the CSS of the button
+    await expect(contactPage.sendMessageBtn).toHaveCSS('display', 'block');
 
 });
 
-test('Send message button CSS check', async ({page}) => {
-    await page.goto('https://www.demoblaze.com/');
-
-    await page.getByRole('link', { name: 'Contact' }).click();
-
-    // Check the CSS of the button
-    const locator = page.getByRole('button', { name: 'Send message' });
-    await expect(locator).toHaveCSS('display', 'block');
-
-});
-
-test('modal closed', async ({page}) => {
-    await page.goto('https://www.demoblaze.com/');
-
-    await page.getByRole('link', { name: 'Contact' }).click();
-
-    await page.getByRole('button', { name: 'Send message' }).click();
+test('modal closed', async ({ page }) => {
+    const contactPage = new ContactPage(page);
+    await contactPage.goto();
 
     page.on('dialog', dialog => dialog.accept());
 
+    await contactPage.contactLinkLocator.click();
+
+    await contactPage.sendMessageBtn.click();
+
     //Check if Contact modal is closed
-    await expect(page.getByRole('heading', { name: 'New message' })).toBeHidden();
+    await expect(contactPage.newMessageHeading).toBeHidden();
 });

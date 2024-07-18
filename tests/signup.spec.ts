@@ -9,11 +9,11 @@ test('open sign up modal', async ({ page }) => {
     await signupPage.signupLinkLocator.click();
 
     //Expects page to open a modal with the "Sign up" heading
-    await expect(signupPage.signupModalHeading).toBeVisible();
+    await expect(signupPage.signupHeading).toBeVisible();
 
 });
 
-test('POM sign up success', async ({ page }) => {
+test('sign up success', async ({ page }) => {
     const signupPage = new SignupPage(page);
 
     //Wait for the alert to appear and verify its content
@@ -56,7 +56,7 @@ test('close button CSS check', async ({ page }) => {
     await signupPage.signupLinkLocator.click();
 
     // Check the CSS of the Close button
-    const locator = signupPage.signupCloseBtn;
+    const locator = signupPage.closeBtn;
     await expect(locator).toHaveCSS('border-top-style', 'solid');
 
 });

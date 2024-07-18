@@ -4,18 +4,22 @@ export class LoginPage {
     //Page instance
     readonly page: Page;
     readonly loginLinkLocator: Locator;
-    readonly loginBtnLocator: Locator;
-    readonly loginModalHeading: Locator;
-    readonly loginCloseBtn: Locator;
-    readonly loginXbutton: Locator;
+    readonly loginBtn: Locator;
+    readonly loginHeading: Locator;
+    readonly CloseBtn: Locator;
+    readonly xBtn: Locator;
+    readonly usernameInput: Locator;
+    readonly passwordInput: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.loginLinkLocator = page.getByRole('link', { name: 'Log in' });
-        this.loginBtnLocator = page.getByRole('button', { name: 'Log in' });
-        this.loginModalHeading = page.getByRole('heading', { name: 'Log in' });
-        this.loginCloseBtn = page.getByLabel('Log in').getByText('Close');
-        this.loginXbutton = page.getByLabel('Log in').getByLabel('Close');
+        this.loginBtn = page.getByRole('button', { name: 'Log in' });
+        this.loginHeading = page.getByRole('heading', { name: 'Log in' });
+        this.CloseBtn = page.getByLabel('Log in').getByText('Close');
+        this.xBtn = page.getByLabel('Log in').getByLabel('Close');
+        this.usernameInput = page.getByLabel('Username:');
+        this.passwordInput = page.getByLabel('Password:');
         
     }
 
@@ -32,7 +36,7 @@ export class LoginPage {
         await this.goto();
         await this.loginLinkLocator.click();
         await this.fillLoginForms(username, password);
-        await this.loginBtnLocator.click();
+        await this.loginBtn.click();
     }
 }
 

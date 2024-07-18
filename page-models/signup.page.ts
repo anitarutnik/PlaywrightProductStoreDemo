@@ -3,18 +3,18 @@ import { Locator, Page } from "@playwright/test";
 export class SignupPage {
     readonly page: Page;
     readonly signupLinkLocator: Locator;
-    readonly signupBtnLocator: Locator;
-    readonly signupModalHeading: Locator;
-    readonly signupCloseBtn: Locator;
-    readonly signupXbutton: Locator;
+    readonly signupBtn: Locator;
+    readonly signupHeading: Locator;
+    readonly closeBtn: Locator;
+    readonly xBtn: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.signupLinkLocator = page.getByRole('link', { name: 'Sign up' });
-        this.signupBtnLocator = page.getByRole('button', { name: 'Sign up' })
-        this.signupModalHeading = page.getByRole('heading', { name: 'Sign up' });
-        this.signupCloseBtn = page.getByLabel('Sign up').getByText('Close');
-        this.signupXbutton = page.getByLabel('Sign up').getByLabel('Close');
+        this.signupBtn = page.getByRole('button', { name: 'Sign up' })
+        this.signupHeading = page.getByRole('heading', { name: 'Sign up' });
+        this.closeBtn = page.getByLabel('Sign up').getByText('Close');
+        this.xBtn = page.getByLabel('Sign up').getByLabel('Close');
     }
 
     async goto() {
@@ -30,7 +30,7 @@ export class SignupPage {
         await this.goto();
         await this.signupLinkLocator.click();
         await this.fillSignupForms(username, password);
-        await this.signupBtnLocator.click();
+        await this.signupBtn.click();
     }
 
 }
