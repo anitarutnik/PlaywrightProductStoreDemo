@@ -7,10 +7,11 @@ test('add to cart success', async ({ page, productPage }) => {
     page.on('dialog', async dialog => {
 
         //Check the dialog message
-        expect(dialog.message()).toBe('Product added');
-
+        await expect(dialog.message()).toBe('Product added');
+        
         //Click the Ok button
         await dialog.accept();
+
     });
 
     //Click the product link.
@@ -19,6 +20,8 @@ test('add to cart success', async ({ page, productPage }) => {
     //Click Add to cart
     await productPage.addBtn.click();
 
+    //Visual comparisons
+    await expect(page).toHaveScreenshot();
 });
 
 test('check if phone is in the cart', async ({ productPage }) => {
@@ -29,6 +32,6 @@ test('check if phone is in the cart', async ({ productPage }) => {
     await productPage.cartLink.click();
 
     //Expects product to be added to cart
-     await expect(productPage.addedProduct).toBeVisible();
+    await expect(productPage.addedProduct).toBeVisible();
 
 });

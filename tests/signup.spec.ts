@@ -11,13 +11,13 @@ test('open sign up modal', async ({ signupPage }) => {
 
 });
 
-test('sign up success', async ({ page, signupPage  }) => {
+test('sign up success', async ({ page, signupPage }) => {
 
     //Wait for the alert to appear and verify its content
     page.on('dialog', async dialog => {
 
         //Check the dialog message
-        expect(dialog.message()).toBe('Sign up successful.');
+        await expect(dialog.message()).toBe('Sign up successful.');
 
         //Click the Ok button
         await dialog.accept();
@@ -34,7 +34,7 @@ test('user already exists', async ({ page, signupPage }) => {
     page.on('dialog', async dialog => {
 
         //Check the dialog message
-        expect(dialog.message()).toBe('This user already exist.');
+        await expect(dialog.message()).toBe('This user already exist.');
 
         //Click the Ok button
         await dialog.accept();
@@ -42,6 +42,9 @@ test('user already exists', async ({ page, signupPage }) => {
 
     await signupPage.signUp('test', 'test');
 
+    //Visual comparisons
+    await expect(page).toHaveScreenshot();
+    
 });
 
 

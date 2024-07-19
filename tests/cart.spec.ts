@@ -1,6 +1,6 @@
 import { test, expect } from '../page-models/base';
 
-test('open cart page', async ({ cartPage }) => {
+test('open cart page', async ({ page, cartPage }) => {
     await cartPage.goto();
 
     //Click the Cart link.
@@ -11,6 +11,9 @@ test('open cart page', async ({ cartPage }) => {
 
     //Expects page to open a modal with the "Place order" heading.
     await expect(cartPage.placeOrderHeading).toBeVisible();
+
+     //Visual comparisons
+     await expect(page).toHaveScreenshot();
 
 });
 

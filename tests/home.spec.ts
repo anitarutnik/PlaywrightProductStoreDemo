@@ -1,6 +1,6 @@
 import { test, expect } from '../page-models/base';
 
-test('Phones category properly listed', async ({ homePage }) => {
+test('Phones category properly listed', async ({ page, homePage }) => {
     await homePage.goto();
 
     //Click on the "Phones" category
@@ -13,6 +13,10 @@ test('Phones category properly listed', async ({ homePage }) => {
     await expect(homePage.sonyLaptop).not.toBeVisible();
 
     await expect(homePage.appleMonitor).not.toBeVisible();
+
+    //Visual comparisons
+    await expect(page).toHaveScreenshot();
+
 
 });
 
