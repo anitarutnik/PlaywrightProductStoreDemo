@@ -1,8 +1,6 @@
-import { test, expect } from '@playwright/test';
-import { ContactPage } from '../page-models/contact.page';
+import { test, expect } from '../page-models/base';
 
-test('open contact modal', async ({ page }) => {
-    const contactPage = new ContactPage(page);
+test('open contact modal', async ({ contactPage }) => {
     await contactPage.goto();
 
     //Click the Contact link
@@ -13,8 +11,7 @@ test('open contact modal', async ({ page }) => {
 
 });
 
-test('Contact email CSS check', async ({ page }) => {
-    const contactPage = new ContactPage(page);
+test('Contact email CSS check', async ({ contactPage }) => {
     await contactPage.goto();
 
     //Click the Contact link.
@@ -23,8 +20,7 @@ test('Contact email CSS check', async ({ page }) => {
     await expect(contactPage.emailInput).toHaveCSS('font-weight', '400');
 });
 
-test('message sent', async ({ page }) => {
-    const contactPage = new ContactPage(page);
+test('message sent', async ({ page, contactPage }) => {
 
     //Wait for the alert to appear and verify its content
     page.on('dialog', async dialog => {
@@ -40,8 +36,7 @@ test('message sent', async ({ page }) => {
     await contactPage.sendMessage('test@test.com', 'test name', 'test message');
 });
 
-test('Send message button CSS check', async ({ page }) => {
-    const contactPage = new ContactPage(page);
+test('Send message button CSS check', async ({ contactPage }) => {
     await contactPage.goto();
 
     await contactPage.contactLinkLocator.click();
@@ -51,8 +46,7 @@ test('Send message button CSS check', async ({ page }) => {
 
 });
 
-test('modal closed', async ({ page }) => {
-    const contactPage = new ContactPage(page);
+test('modal closed', async ({ page, contactPage }) => {
     await contactPage.goto();
 
     page.on('dialog', dialog => dialog.accept());

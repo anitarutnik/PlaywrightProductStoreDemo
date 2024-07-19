@@ -1,8 +1,6 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../page-models/login.page';
+import { test, expect } from '../page-models/base';
 
-test('open log in modal', async ({ page }) => {
-    const loginPage = new LoginPage(page);
+test('open log in modal', async ({ loginPage }) => {
     await loginPage.goto();
 
     //Click the Log in link.
@@ -14,8 +12,7 @@ test('open log in modal', async ({ page }) => {
 });
 
 
-test('login success', async ({ page }) => {
-    const loginPage = new LoginPage(page);
+test('login success', async ({ page, loginPage }) => {
 
     await loginPage.logIn('test', 'test');
     await page.waitForSelector('#logout2', { timeout: 5000 });
@@ -26,16 +23,14 @@ test('login success', async ({ page }) => {
 });
 
 
-test('login modal heading hidden', async ({ page }) => {
-    const loginPage = new LoginPage(page);
+test('login modal heading hidden', async ({ loginPage }) => {
     await loginPage.logIn('test', 'test');
 
     await expect(loginPage.loginHeading).toBeHidden();
 });
 
 
-test('empty field alert', async ({ page }) => {
-    const loginPage = new LoginPage(page);
+test('empty field alert', async ({ page, loginPage }) => {
     await loginPage.goto();
 
     page.on('dialog', async dialog => {
@@ -53,9 +48,7 @@ test('empty field alert', async ({ page }) => {
 });
 
 
-test('user does not exist', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-
+test('user does not exist', async ({ page, loginPage }) => {
     page.on('dialog', async dialog => {
 
         //Check the dialog message
@@ -72,9 +65,7 @@ test('user does not exist', async ({ page }) => {
 });
 
 
-test('close modal with Close button', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-
+test('close modal with Close button', async ({ loginPage }) => {
     await loginPage.goto();
 
     await loginPage.loginLinkLocator.click();
@@ -84,9 +75,7 @@ test('close modal with Close button', async ({ page }) => {
 });
 
 
-test('close modal with X button', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-
+test('close modal with X button', async ({ loginPage }) => {
     await loginPage.goto();
 
     await loginPage.loginLinkLocator.click();
@@ -95,8 +84,8 @@ test('close modal with X button', async ({ page }) => {
 
 });
 
-test('username input field CSS check', async ({ page }) => {
-    const loginPage = new LoginPage(page);
+
+test('username input field CSS check', async ({ loginPage }) => {
     await loginPage.goto();
 
     await loginPage.loginLinkLocator.click();
@@ -107,8 +96,7 @@ test('username input field CSS check', async ({ page }) => {
 });
 
 
-test('login button CSS check', async ({ page }) => {
-    const loginPage = new LoginPage(page);
+test('login button CSS check', async ({ loginPage }) => {
     await loginPage.goto();
 
     await loginPage.loginLinkLocator.click();
@@ -119,8 +107,7 @@ test('login button CSS check', async ({ page }) => {
 });
 
 
-test('x button CSS check', async ({ page }) => {
-    const loginPage = new LoginPage(page);
+test('x button CSS check', async ({ loginPage }) => {
     await loginPage.goto();
 
     await loginPage.loginLinkLocator.click();

@@ -1,8 +1,6 @@
-import { test, expect } from '@playwright/test';
-import { CartPage } from '../page-models/cart.page';
+import { test, expect } from '../page-models/base';
 
-test('open cart page', async ({ page }) => {
-    const cartPage = new CartPage(page);
+test('open cart page', async ({ cartPage }) => {
     await cartPage.goto();
 
     //Click the Cart link.
@@ -16,8 +14,7 @@ test('open cart page', async ({ page }) => {
 
 });
 
-test('Purchase success', async ({ page }) => {
-    const cartPage = new CartPage(page);
+test('Purchase success', async ({ page, cartPage }) => {
 
     await cartPage.purchaseItem('test name', 'test country', 'test city', '01234567', 'July', '2024');
 
@@ -26,8 +23,7 @@ test('Purchase success', async ({ page }) => {
 
 });
 
-test('Name and card empty field alert', async ({ page }) => {
-    const cartPage = new CartPage(page);
+test('Name and card empty field alert', async ({ page, cartPage }) => {
     await cartPage.goto();
 
     page.on('dialog', async dialog => {
@@ -45,8 +41,7 @@ test('Name and card empty field alert', async ({ page }) => {
 
 });
 
-test('close modal with Close button', async ({ page }) => {
-    const cartPage = new CartPage(page);
+test('close modal with Close button', async ({ cartPage }) => {
 
     await cartPage.goto();
     await cartPage.cartLinkLocator.click();
@@ -55,8 +50,7 @@ test('close modal with Close button', async ({ page }) => {
 
 });
 
-test('close modal with X button', async ({ page }) => {
-    const cartPage = new CartPage(page);
+test('close modal with X button', async ({ cartPage }) => {
 
     await cartPage.goto();
     await cartPage.cartLinkLocator.click();
@@ -65,8 +59,7 @@ test('close modal with X button', async ({ page }) => {
 
 });
 
-test('Country input field CSS check', async ({ page }) => {
-    const cartPage = new CartPage(page);
+test('Country input field CSS check', async ({ cartPage }) => {
     await cartPage.goto();
 
     await cartPage.cartLinkLocator.click();
@@ -78,8 +71,7 @@ test('Country input field CSS check', async ({ page }) => {
 
 });
 
-test('table cell CSS check', async ({ page }) => {
-    const cartPage = new CartPage(page);
+test('table cell CSS check', async ({ cartPage }) => {
     await cartPage.goto();
 
     await cartPage.cartLinkLocator.click();

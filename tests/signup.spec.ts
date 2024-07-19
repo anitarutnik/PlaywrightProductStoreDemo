@@ -1,8 +1,6 @@
-import { test, expect } from '@playwright/test';
-import { SignupPage } from '../page-models/signup.page';
+import { test, expect } from '../page-models/base';
 
-test('open sign up modal', async ({ page }) => {
-    const signupPage = new SignupPage(page);
+test('open sign up modal', async ({ signupPage }) => {
     await signupPage.goto();
 
     //Click the sign up link.
@@ -13,8 +11,7 @@ test('open sign up modal', async ({ page }) => {
 
 });
 
-test('sign up success', async ({ page }) => {
-    const signupPage = new SignupPage(page);
+test('sign up success', async ({ page, signupPage  }) => {
 
     //Wait for the alert to appear and verify its content
     page.on('dialog', async dialog => {
@@ -31,8 +28,7 @@ test('sign up success', async ({ page }) => {
 
 });
 
-test('user already exists', async ({ page }) => {
-    const signupPage = new SignupPage(page);
+test('user already exists', async ({ page, signupPage }) => {
 
     //Wait for the alert to appear and verify its content
     page.on('dialog', async dialog => {
@@ -49,8 +45,7 @@ test('user already exists', async ({ page }) => {
 });
 
 
-test('close button CSS check', async ({ page }) => {
-    const signupPage = new SignupPage(page);
+test('close button CSS check', async ({ signupPage }) => {
     await signupPage.goto();
 
     await signupPage.signupLinkLocator.click();

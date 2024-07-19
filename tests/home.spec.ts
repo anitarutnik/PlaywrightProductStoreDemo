@@ -1,8 +1,6 @@
-import { test, expect } from "@playwright/test";
-import { HomePage } from "../page-models/home.page";
+import { test, expect } from '../page-models/base';
 
-test('Phones category properly listed', async ({ page }) => {
-    const homePage = new HomePage(page);
+test('Phones category properly listed', async ({ homePage }) => {
     await homePage.goto();
 
     //Click on the "Phones" category
@@ -18,8 +16,7 @@ test('Phones category properly listed', async ({ page }) => {
 
 });
 
-test('Laptops category properly listed', async ({ page }) => {
-    const homePage = new HomePage(page);
+test('Laptops category properly listed', async ({ homePage }) => {
     await homePage.goto();
 
     //Click on the "Laptops" category
@@ -35,8 +32,7 @@ test('Laptops category properly listed', async ({ page }) => {
 
 });
 
-test('Monitors category properly listed', async ({ page }) => {
-    const homePage = new HomePage(page);
+test('Monitors category properly listed', async ({ homePage }) => {
     await homePage.goto();
 
     //Click on the "Monitors" category
@@ -52,8 +48,7 @@ test('Monitors category properly listed', async ({ page }) => {
 
 });
 
-test('navigation CSS check', async ({page}) => {
-    const homePage = new HomePage(page);
+test('navigation CSS check', async ({ homePage }) => {
     await homePage.goto();
 
     //Check the navigation styling
@@ -62,8 +57,7 @@ test('navigation CSS check', async ({page}) => {
 });
 
 
-test('footer CSS check', async ({page}) => {
-    const homePage = new HomePage(page);
+test('footer CSS check', async ({ homePage }) => {
     await homePage.goto();
 
     //Check the footer styling

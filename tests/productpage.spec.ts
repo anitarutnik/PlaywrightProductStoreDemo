@@ -1,8 +1,6 @@
-import { test, expect } from "@playwright/test";
-import { ProductPage } from "../page-models/productpage.page";
+import { test, expect } from '../page-models/base';
 
-test('add to cart success', async ({ page }) => {
-    const productPage = new ProductPage(page);
+test('add to cart success', async ({ page, productPage }) => {
     await productPage.goto();
 
     //Wait for the alert to appear and verify its content
@@ -23,8 +21,7 @@ test('add to cart success', async ({ page }) => {
 
 });
 
-test('checking if phone is in the cart', async ({page}) => {
-    const productPage = new ProductPage(page);
+test('check if phone is in the cart', async ({ productPage }) => {
     await productPage.goto();
 
     await productPage.productLink.click();
