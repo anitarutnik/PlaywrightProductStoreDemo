@@ -79,7 +79,7 @@ test('close modal with Close button', async ({ page }) => {
 
     await loginPage.loginLinkLocator.click();
 
-    await loginPage.CloseBtn.click();
+    await loginPage.closeBtn.click();
 
 });
 

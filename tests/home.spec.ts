@@ -1,69 +1,73 @@
 import { test, expect } from "@playwright/test";
+import { HomePage } from "../page-models/home.page";
 
 test('Phones category properly listed', async ({ page }) => {
-    await page.goto('https://www.demoblaze.com/');
+    const homePage = new HomePage(page);
+    await homePage.goto();
 
     //Click on the "Phones" category
-    await page.getByRole('link', { name: 'Phones' }).click();
+    await homePage.phonesCat.click();
 
     //Expects that only phones are listed
-    await expect(page.getByRole('link', { name: 'Samsung galaxy s6' })).toBeVisible();
+    await expect(homePage.samsungPhone).toBeVisible();
 
     //Expects that products from other categories are not listed
-    await expect(page.getByRole('link', { name: 'Sony vaio i5' })).not.toBeVisible();
+    await expect(homePage.sonyLaptop).not.toBeVisible();
 
-    await expect(page.getByRole('link', { name: 'Apple monitor 24' })).not.toBeVisible();
+    await expect(homePage.appleMonitor).not.toBeVisible();
 
 });
 
 test('Laptops category properly listed', async ({ page }) => {
-    await page.goto('https://www.demoblaze.com/');
+    const homePage = new HomePage(page);
+    await homePage.goto();
 
     //Click on the "Laptops" category
-    await page.getByRole('link', { name: 'Laptops' }).click();
+    await homePage.laptopsCat.click();
 
     //Expects that only laptops are listed
-    await expect(page.getByRole('link', { name: 'Sony vaio i5' })).toBeVisible();
+    await expect(homePage.sonyLaptop).toBeVisible();
 
     //Expects that products from other categories are not listed
-    await expect(page.getByRole('link', { name: 'Samsung galaxy s6' })).not.toBeVisible();
+    await expect(homePage.samsungPhone).not.toBeVisible();
 
-    await expect(page.getByRole('link', { name: 'Apple monitor 24' })).not.toBeVisible();
+    await expect(homePage.appleMonitor).not.toBeVisible();
 
 });
 
 test('Monitors category properly listed', async ({ page }) => {
-    await page.goto('https://www.demoblaze.com/');
+    const homePage = new HomePage(page);
+    await homePage.goto();
 
     //Click on the "Monitors" category
-    await page.getByRole('link', { name: 'Monitors' }).click();
+    await homePage.monitorsCat.click();
 
     //Expects that only monitors are listed
-    await expect(page.getByRole('link', { name: 'Apple monitor 24' })).toBeVisible();
+    await expect(homePage.appleMonitor).toBeVisible();
 
     //Expects that products from other categories are not listed
-    await expect(page.getByRole('link', { name: 'Samsung galaxy s6' })).not.toBeVisible();
+    await expect(homePage.samsungPhone).not.toBeVisible();
 
-    await expect(page.getByRole('link', { name: 'Sony vaio i5' })).not.toBeVisible();
+    await expect(homePage.sonyLaptop).not.toBeVisible();
 
 });
 
 test('navigation CSS check', async ({page}) => {
-    await page.goto('https://www.demoblaze.com/');
+    const homePage = new HomePage(page);
+    await homePage.goto();
 
-    // Check the navigation styling
-    const locator = page.getByText('PRODUCT STORE Home (current)');
-    await expect(locator).toHaveCSS('position', 'relative');
+    //Check the navigation styling
+    await expect(homePage.homeNav).toHaveCSS('position', 'relative');
 
 });
 
 
 test('footer CSS check', async ({page}) => {
-    await page.goto('https://www.demoblaze.com/');
+    const homePage = new HomePage(page);
+    await homePage.goto();
 
-    // Check the footer styling
-    const locator = page.locator('#footc');
-    await expect(locator).toHaveCSS('padding-bottom', '48px');
+    //Check the footer styling
+    await expect(homePage.homeFoot).toHaveCSS('padding-bottom', '48px');
 
 });
 

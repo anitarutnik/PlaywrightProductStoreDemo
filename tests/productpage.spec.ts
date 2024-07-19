@@ -1,7 +1,9 @@
 import { test, expect } from "@playwright/test";
+import { ProductPage } from "../page-models/productpage.page";
 
 test('add to cart success', async ({ page }) => {
-    await page.goto('https://www.demoblaze.com/');
+    const productPage = new ProductPage(page);
+    await productPage.goto();
 
     //Wait for the alert to appear and verify its content
     page.on('dialog', async dialog => {
@@ -14,20 +16,22 @@ test('add to cart success', async ({ page }) => {
     });
 
     //Click the product link.
-    await page.getByRole('link', { name: 'Samsung galaxy s6' }).click();
+    await productPage.productLink.click();
 
     //Click Add to cart
-    await page.getByRole('link', { name: 'Add to cart' }).click();
+    await productPage.addBtn.click();
 
 });
 
 test('checking if phone is in the cart', async ({page}) => {
-    await page.goto('https://www.demoblaze.com/');
-    await page.getByRole('link', { name: 'Samsung galaxy s6' }).click();
-    await page.getByRole('link', { name: 'Add to cart' }).click();
-    await page.getByRole('link', { name: 'Cart', exact: true }).click();
+    const productPage = new ProductPage(page);
+    await productPage.goto();
+
+    await productPage.productLink.click();
+    await productPage.addBtn.click();
+    await productPage.cartLink.click();
 
     //Expects product to be added to cart
-     await expect(page.getByRole('cell', { name: 'Samsung galaxy s6' })).toBeVisible();
+     await expect(productPage.addedProduct).toBeVisible();
 
 });

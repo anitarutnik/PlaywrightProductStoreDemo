@@ -6,7 +6,7 @@ export class LoginPage {
     readonly loginLinkLocator: Locator;
     readonly loginBtn: Locator;
     readonly loginHeading: Locator;
-    readonly CloseBtn: Locator;
+    readonly closeBtn: Locator;
     readonly xBtn: Locator;
     readonly usernameInput: Locator;
     readonly passwordInput: Locator;
@@ -16,7 +16,7 @@ export class LoginPage {
         this.loginLinkLocator = page.getByRole('link', { name: 'Log in' });
         this.loginBtn = page.getByRole('button', { name: 'Log in' });
         this.loginHeading = page.getByRole('heading', { name: 'Log in' });
-        this.CloseBtn = page.getByLabel('Log in').getByText('Close');
+        this.closeBtn = page.getByLabel('Log in').getByText('Close');
         this.xBtn = page.getByLabel('Log in').getByLabel('Close');
         this.usernameInput = page.getByLabel('Username:');
         this.passwordInput = page.getByLabel('Password:');

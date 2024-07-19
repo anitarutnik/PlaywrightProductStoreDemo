@@ -1,76 +1,91 @@
 import { test, expect } from '@playwright/test';
+import { CartPage } from '../page-models/cart.page';
 
-test('login link', async ({ page }) => {
-    await page.goto('https://www.demoblaze.com/');
+test('open cart page', async ({ page }) => {
+    const cartPage = new CartPage(page);
+    await cartPage.goto();
 
     //Click the Cart link.
-    await page.getByRole('link', { name: 'Cart' }).click();
+    await cartPage.cartLinkLocator.click();
 
-     //Click the 'Place Order' button.
-     await page.getByRole('button', { name: 'Place Order' }).click();
+    //Click the 'Place Order' button.
+    await cartPage.placeOrderBtn.click();
 
     //Expects page to open a modal with the "Place order" heading.
-    await expect(page.getByRole('heading', { name: 'Place order' })).toBeVisible();
+    await expect(cartPage.placeOrderHeading).toBeVisible();
 
 });
 
 test('Purchase success', async ({ page }) => {
-    await page.goto('https://www.demoblaze.com/');
+    const cartPage = new CartPage(page);
 
-    //Click the Cart link.
-    await page.getByRole('link', { name: 'Cart' }).click();
-
-     //Click the 'Place Order' button.
-     await page.getByRole('button', { name: 'Place Order' }).click();
-
-    //Enter name
-    await page.getByLabel('Total:').fill('Test Name');
-
-    //Enter country
-    await page.getByLabel('Country:').fill('Test Country'); 
-
-    //Enter city
-    await page.getByLabel('City:').fill('Test City');
-
-    //Enter Credit card
-    await page.getByLabel('Credit card:').fill('123456789');
-
-    //Enter month
-    await page.getByLabel('Month:').fill('July');
-
-    //Enter year
-    await page.getByLabel('Year:').fill('2026');
-
-    //Click the 'Purchase' button
-    await page.getByRole('button', { name: 'Purchase' }).click();
+    await cartPage.purchaseItem('test name', 'test country', 'test city', '01234567', 'July', '2024');
 
     //Wait for the modal to appear and verify its content
-     await expect(page.getByText('Thank you for your purchase!')).toBeVisible();
-   
-    
- });
-
- test('Country input field CSS check', async ({page}) => {
-    await page.goto('https://www.demoblaze.com/');
-
-    await page.getByRole('link', { name: 'Cart' }).click();
-
-    await page.getByRole('button', { name: 'Place Order' }).click();
-
-    //Check the styling of the Country field
-    const locator = page.getByLabel('Country:');
-    await expect(locator).toHaveCSS('background-clip', 'padding-box');
+    await expect(page.getByText('Thank you for your purchase!')).toBeVisible();
 
 });
 
-test('table cell CSS check', async ({page}) => {
-    await page.goto('https://www.demoblaze.com/');
+test('Name and card empty field alert', async ({ page }) => {
+    const cartPage = new CartPage(page);
+    await cartPage.goto();
 
-    await page.getByRole('link', { name: 'Cart' }).click();
+    page.on('dialog', async dialog => {
+
+        //Check the dialog message
+        expect(dialog.message()).toBe('Please fill out Name and Creditcard.');
+
+        //Click the Ok button
+        await dialog.accept();
+    });
+
+    await cartPage.cartLinkLocator.click();
+    await cartPage.placeOrderBtn.click();
+    await cartPage.purchaseBtn.click();
+
+});
+
+test('close modal with Close button', async ({ page }) => {
+    const cartPage = new CartPage(page);
+
+    await cartPage.goto();
+    await cartPage.cartLinkLocator.click();
+    await cartPage.placeOrderBtn.click();
+    await cartPage.closeBtn.click();
+
+});
+
+test('close modal with X button', async ({ page }) => {
+    const cartPage = new CartPage(page);
+
+    await cartPage.goto();
+    await cartPage.cartLinkLocator.click();
+    await cartPage.placeOrderBtn.click();
+    await cartPage.xBtn.click();
+
+});
+
+test('Country input field CSS check', async ({ page }) => {
+    const cartPage = new CartPage(page);
+    await cartPage.goto();
+
+    await cartPage.cartLinkLocator.click();
+
+    await cartPage.placeOrderBtn.click();
+
+    //Check the styling of the Country field
+    await expect(cartPage.countryInput).toHaveCSS('background-clip', 'padding-box');
+
+});
+
+test('table cell CSS check', async ({ page }) => {
+    const cartPage = new CartPage(page);
+    await cartPage.goto();
+
+    await cartPage.cartLinkLocator.click();
 
     //Check the styling of the table cell
-    const locator = page.getByRole('cell', { name: 'Title' });
-    await expect(locator).toHaveCSS('padding-left', '12px');
+    await expect(cartPage.tableCell).toHaveCSS('padding-left', '12px');
 
 });
 
