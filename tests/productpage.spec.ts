@@ -59,5 +59,5 @@ test('check if phone is in the cart', async ({ page, productPage }) => {
 test('product visual comparisons test', async ({ page, productPage }) => {
     await productPage.goto();
     await productPage.productLink.click();
-    await expect(page).toHaveScreenshot();
+    await expect(page).toHaveScreenshot('product-visual-comparisons-test-1-chromium-win32.png');
 })
