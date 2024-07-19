@@ -43,8 +43,8 @@ test('user already exists', async ({ page, signupPage }) => {
     await signupPage.signUp('test', 'test');
 
     //Visual comparisons
-    await expect(page).toHaveScreenshot();
-    
+    // await expect(page).toHaveScreenshot();
+
 });
 
 

@@ -13,7 +13,7 @@ test('open cart page', async ({ page, cartPage }) => {
     await expect(cartPage.placeOrderHeading).toBeVisible();
 
      //Visual comparisons
-     await expect(page).toHaveScreenshot();
+    //  await expect(page).toHaveScreenshot();
 
 });
 

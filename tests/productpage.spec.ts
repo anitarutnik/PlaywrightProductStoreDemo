@@ -21,7 +21,7 @@ test('add to cart success', async ({ page, productPage }) => {
     await productPage.addBtn.click();
 
     //Visual comparisons
-    await expect(page).toHaveScreenshot();
+    // await expect(page).toHaveScreenshot();
 });
 
 test('check if phone is in the cart', async ({ productPage }) => {
@@ -45,3 +45,9 @@ test('check if phone is in the cart', async ({ productPage }) => {
     // Expect the product to be visible in the cart
     await expect(productPage.addedProduct).toBeVisible();
 });
+
+test('product visual comparisons test', async ({ page, productPage }) => {
+    await productPage.goto();
+    await productPage.productLink.click();
+    await expect(page).toHaveScreenshot();
+})
