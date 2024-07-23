@@ -15,6 +15,7 @@ export class CartPage {
     readonly monthInput: Locator;
     readonly yearInput: Locator;
     readonly tableCell: Locator;
+    readonly deleteBtn: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -31,6 +32,7 @@ export class CartPage {
         this.monthInput = page.getByLabel('Month:');
         this.yearInput = page.getByLabel('Year:');
         this.tableCell = page.getByRole('cell', { name: 'Pic' });
+        this.deleteBtn = page.getByRole('link', { name: 'Delete' });
 
     }
 
