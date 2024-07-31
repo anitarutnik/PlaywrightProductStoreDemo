@@ -1,3 +1,4 @@
+import { Route } from '@playwright/test';
 import { test, expect } from '../page-models/base';
 
 test('open cart page', async ({ page, cartPage }) => {
@@ -83,4 +84,3 @@ test('table cell CSS check', async ({ cartPage }) => {
     await expect(cartPage.tableCell).toHaveCSS('padding-left', '12px');
 
 });
-

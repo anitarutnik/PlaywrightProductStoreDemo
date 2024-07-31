@@ -24,7 +24,7 @@ export class HomePage {
     }
 
     async goto() {
-        await this.page.goto('https://www.demoblaze.com/', { waitUntil: 'load' });
+        await this.page.goto('/', { waitUntil: 'load' });
     }
 
 

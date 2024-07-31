@@ -10,6 +10,7 @@ export class LoginPage {
     readonly xBtn: Locator;
     readonly usernameInput: Locator;
     readonly passwordInput: Locator;
+    readonly loggedInUser: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -20,11 +21,11 @@ export class LoginPage {
         this.xBtn = page.getByLabel('Log in').getByLabel('Close');
         this.usernameInput = page.getByLabel('Username:');
         this.passwordInput = page.getByLabel('Password:');
-        
+        this.loggedInUser = page.getByRole('link', { name: 'Welcome test' })
     }
 
     async goto() {
-        await this.page.goto('https://www.demoblaze.com/', { waitUntil: 'load' });
+        await this.page.goto('/', { waitUntil: 'load' });
     }
 
     async fillLoginForms(username: string, password: string) {

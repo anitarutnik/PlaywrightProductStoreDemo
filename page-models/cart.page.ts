@@ -16,6 +16,7 @@ export class CartPage {
     readonly yearInput: Locator;
     readonly tableCell: Locator;
     readonly deleteBtn: Locator;
+    readonly deleteCartItemBtn: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -33,11 +34,12 @@ export class CartPage {
         this.yearInput = page.getByLabel('Year:');
         this.tableCell = page.getByRole('cell', { name: 'Pic' });
         this.deleteBtn = page.getByRole('link', { name: 'Delete' });
+        this.deleteCartItemBtn = page.locator('td:nth-child(4) > a')
 
     }
 
     async goto() {
-        await this.page.goto('https://www.demoblaze.com/', { waitUntil: 'load' });
+        await this.page.goto('/', { waitUntil: 'load' });
     }
 
     async fillOrderForms(total: string, country: string, city: string, creditCard: string, month: string, year: string) {
@@ -55,5 +57,14 @@ export class CartPage {
         await this.placeOrderBtn.click();
         await this.fillOrderForms(total, country, city, creditCard, month, year);
         await this.purchaseBtn.click();
+    }
+
+    async deleteCartItemsRecursively() {
+        const itemCount = await this.deleteCartItemBtn.count();
+        if (itemCount > 0) {
+            await this.deleteCartItemBtn.first().click();
+            await this.page.waitForTimeout(2000);
+            await this.deleteCartItemsRecursively(); // Recursively call the function
+        }
     }
 }

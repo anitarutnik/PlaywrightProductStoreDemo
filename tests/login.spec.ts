@@ -117,5 +117,10 @@ test('x button CSS check', async ({ loginPage }) => {
 
 });
 
+test('auth demo', async ({ page }) => {
+    await page.goto('https://www.demoblaze.com/index.html');
+    await expect(page.getByText('Welcome test')).toBeVisible();
+})
+
 
 

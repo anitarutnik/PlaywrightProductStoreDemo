@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
+import path from 'path';
 
+export const STORAGE_STATE = path.join(__dirname, "tests/setup/data.json");
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -25,17 +27,25 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://127.0.0.1:3000',
+    baseURL: 'https://www.demoblaze.com/index.html',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
   },
+
 
   /* Configure projects for major browsers */
   projects: [
     {
+      name:"setup",
+      testDir: "./tests/setup/",
+      testMatch:"auth.setup.ts"
+    },
+    {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Desktop Chrome'], storageState: STORAGE_STATE },
+      dependencies: ["setup"]
     },
 
     // {
