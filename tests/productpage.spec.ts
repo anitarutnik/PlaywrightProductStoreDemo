@@ -25,7 +25,7 @@ test('add to cart success', async ({ page, productPage }) => {
     // await expect(page).toHaveScreenshot();
 });
 
-test.only('check if phone is in the cart', async ({ page, productPage, cartPage }) => {
+test('check if phone is in the cart', async ({ page, productPage, cartPage }) => {
     // Set up the dialog event listener before performing actions that trigger the dialog
     page.on('dialog', async dialog => { await dialog.accept(); });
 
